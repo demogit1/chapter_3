@@ -63,7 +63,7 @@ describe User do
     it { should_not be_valid }
   end
   
-  describe "when password is not present" do
+   describe "when password is not present" do
   before do
     @user = User.new(name: "Example User", email: "user@example.com",
                      password: " ", password_confirmation: " ")
@@ -79,7 +79,7 @@ end
    
    
  describe "with a password that's too short" do
-    before { @user.password = @user.password_confirmation = "a" * 5 }
+    before { @user.password =  @user.password_confirmation = "a" * 5 }
     it { should be_invalid }
   end  
    
@@ -88,7 +88,7 @@ describe "return value of authenticate method" do
   before { @user.save }
   let(:found_user) { User.find_by(email: @user.email) }
 
-  describe "with valid password" do
+   describe "with valid password" do
     it { should eq found_user.authenticate(@user.password) }
   end
 
