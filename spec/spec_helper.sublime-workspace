@@ -4,8 +4,64 @@
 		"selected_items":
 		[
 			[
+				"sh",
+				"should"
+			],
+			[
+				"sig",
+				"signed_in"
+			],
+			[
+				"pa",
+				"password"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"us",
+				"user"
+			],
+			[
+				"u",
+				"update"
+			],
+			[
+				"no",
+				"no_capybara"
+			],
+			[
+				"lin",
+				"link_to"
+			],
+			[
+				"shu",
+				"should_not"
+			],
+			[
+				"user",
+				"user"
+			],
+			[
+				"use",
+				"user_path"
+			],
+			[
 				"have",
-				"have_title"
+				"have_link"
+			],
+			[
+				"be",
+				"be_admin"
+			],
+			[
+				"na",
+				"name"
+			],
+			[
+				"ex",
+				"expect"
 			],
 			[
 				"vii",
@@ -14,14 +70,6 @@
 			[
 				"wrng",
 				"wrong_user"
-			],
-			[
-				"re",
-				"redirect_to"
-			],
-			[
-				"user",
-				"user_path"
 			],
 			[
 				"pat",
@@ -46,10 +94,6 @@
 			[
 				"si",
 				"sign_in"
-			],
-			[
-				"sig",
-				"signin_path"
 			],
 			[
 				"su",
@@ -132,10 +176,6 @@
 				"href"
 			],
 			[
-				"us",
-				"user"
-			],
-			[
 				"fil",
 				"fill_in"
 			],
@@ -164,34 +204,57 @@
 	"buffers":
 	[
 		{
+			"contents": "FactoryGirl.define do\n   factory :user do\n      sequence(:name) { |n| \"Person #{n}\" }\n      sequence(:email) { |n| \"person_#{n}@example.com\" }\n      password \"foobar\"\n      password_confirmation \"foobar\"\n\n      factory :admin do\n    	admin true\n      end\n    end\n\n\nend   ",
+			"file": "factories.rb",
+			"file_size": 271,
+			"file_write_time": 130313916297106940,
+			"settings":
+			{
+				"buffer_size": 271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "require 'spec_helper'\n\ndescribe \"UserPages\" do\n  subject { page }\n\n  describe \"index\" do\n      let(:user) { FactoryGirl.create(:user) }\n      before(:each) do\n         sign_in user\n         visit users_path\n      end\n\n      it { should have_title('All users') }\n      it { should have_content('All users') }\n\n      describe \"pagination\" do\n\n         before(:all) { 30.times { FactoryGirl.create(:user) } }\n         after(:all) { User.delete_all }\n\n         it { should have_selector('div.pagination') }\n\n         it \"should list each user\" do\n            User.paginate(page: 1).each do |user|\n               expect(page).to have_selector('li', text: user.name)\n            end\n         end\n      end\n\n      describe \"delete links\" do\n\n         it { should_not have_link('delete') }\n\n         describe \"as an admin user\" do\n            let(:admin) { FactoryGirl.create(:admin) }\n            before do\n               sign_in admin\n               visit users_path\n            end\n\n            it { should have_link('delete', href: user_path(User.first)) }\n            it \"should be able to delete another user\" do\n               expect do\n                  click_link('delete',match: :first)\n               end.to change(User, :count).by(-1)\n            end\n            it { should_not have_link('delete', href: user_path(admin)) }\n         end\n      end\n  end\n\n  describe \"signup page\" do\n   before { visit signup_path}\n\n   let(:submit) { \"create my account\" }\n   \n   describe \"with invalid information\" do\n      it \"should not create user\" do\n         expect { click_button submit }.not_to change(User, :count)\n      end\n   end\n   \n   describe \"with valid information\" do\n      before do\n         fill_in \"Name\", with: \"Example User\"\n         fill_in \"Email\", with: \"user@example.com\"\n         fill_in \"Password\", with: \"foobar\"\n         fill_in \"Confirmation\", with: \"foobar\"\n\n         end\n\n         \n         describe \"after saving the user\" do\n            before { click_button submit }\n\n            let(:user) { User.find_by(email: 'user@example.com') }\n            \n            it { should have_link('Sign out') }\n            it { should have_title(user.name) }\n            it { should have_selector('div.alert.alert-success', text: 'Welcome') }\n\n\n       \n\n\n\n\n\n\n      end\n      \n      it \"should create a user\" do\n         expect { click_button submit }.to change(User, :count).by(1)\n      end\n   end\n end\n  \n   describe \"profile page\" do\n      let(:user) { FactoryGirl.create(:user) }\n      #before { visit user_path(user) }\n      before do\n         sign_in user\n         visit user_path(user)\n      end\n      it { should have_content(user.name) }\n      it { should have_title(user.name) }\n   end \n\n   #edit page\n#=begin   \n   describe \"edit\" do\n      let(:user) { FactoryGirl.create(:user) }\n  #    before { visit edit_user_path(user) }\n      before do\n         sign_in user\n         visit edit_user_path(user)\n      end\n\n      describe \"page\" do\n         it { should have_content(\"Update your profile\") }\n         it { should have_title(\"Edit user\") }\n         it { should have_link('change', href: 'http://gravatar.com/emails') }\n         it { should have_link('Sign out', href: signout_path) }\n      end\n\n      describe \"with invalid information\" do\n         \n         let(:new_name) { \"New Name\" }\n         let(:new_email) { \"new@example.com\" }\n         before do\n            fill_in \"Name\", with: new_name\n            fill_in \"Email\", with: new_email\n            fill_in \"Password\", with: user.password\n            fill_in \"Confirm Password\", with: user.password\n            click_button \"Save changes\"\n\n         end\n         it { should have_title(new_name) }\n         it { should have_selector('div.alert.alert-success') }\n        \n\n         specify { expect(user.reload.name).to eq new_name }\n         specify { expect(user.reload.email).to eq new_email }\n      end\n\n      describe \"forbidden attributes\" do\n         let(:params) do\n            { user: { admin: true, password: user.password, password_confiramtion: user.password } }\n         end\n         before do\n            sign_in user, no_capybara: true\n            patch user_path(user), params\n         end\n         specify { expect(user.reload).not_to be_admin}\n      end\n\n   end\nend\n",
+			"file": "requests/user_pages_spec.rb",
+			"file_size": 4258,
+			"file_write_time": 130313938152082419,
+			"settings":
+			{
+				"buffer_size": 4257,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "require 'spec_helper'\n\ndescribe \"AuthenticationPages\" do\n  subject { page }\n\n  describe \"signin\" do\n  	before { visit signin_path }\n  	describe \"with invalid information\" do\n#  	it { should have_content('Sign in') }\n		before { click_button \"Sign in\" }\n\n  		it { should have_title('Sign in') }\n  		it { should have_selector('div.alert.alert-error', text: 'Invalid') }\n\n\n  		describe \"after viisting another page\" do\n  			before { click_link \"Home\" }\n\n  			it { should_not have_selector('div.alert.alert-error') }\n  		end\n\n\n\n\n\n\n  	end\n\n  	describe \"with valid information\" do\n  		let(:user) { FactoryGirl.create(:user) }\n  		before do\n  			fill_in \"Email\", with: user.email.upcase\n  			fill_in \"Password\", with: user.password\n  			click_button \"Sign in\"\n  		end\n\n  		describe \"followed by signout\" do\n  			before { click_link \"Sign out\" }\n  			#it { should have_link('Sign in') }\n  		end\n \n\n\n      before { sign_in user }\n\n  		it { should have_title(user.name) }\n      it { should have_link('Users', href: users_path) }\n  		it { should have_link('Profile', href: user_path(user)) }\n      it { should have_link('Settings', href: edit_user_path(user)) }\n  		it { should have_link('Sign out', href: signout_path) }\n      it { should_not have_link('Sign in', href: signin_path) }\n\n       \n  	\n  	end\n\n  end\n\n\n\n  #-------------------------------------------------------\n\n  describe \"authorization\" do\n      describe \"for non-signed-in-users\" do\n        let(:user) { FactoryGirl.create(:user) }\n\n        describe \"in the Users Controller\" do\n\n\n\n          \n          describe \"visiting edit page\" do\n            before { visit edit_user_path(user) }\n            it { should have_title('Sign in') } \n          end\n\n          describe \"submitting to the update action\" do\n            before { patch user_path(user) }\n            specify { expect(response).to redirect_to(signin_path) }\n          end\n\n\n          describe \"visiting the user index\" do\n            before { visit users_path }\n            it { should have_title('Sign in') }\n          end\n\n        end\n\n\n        describe \"when attempting to visit protected page\" do\n          before do\n            visit edit_user_path(user)\n            fill_in \"Email\", with: user.email\n            fill_in \"Password\", with: user.password\n            click_button \"Sign in\"\n\n          end\n\n\n\n          describe \"after signing in\" do\n\n              it \"should render the desired protected page\" do\n                  expect(page).to have_title('Edit user')\n\n              end\n          end\n        end\n\n      it { should_not have_title(user.name) }\n      it { should_not have_link('Users', href: users_path) }\n      it { should_not have_link('Profile', href: user_path(user)) }\n      it { should_not have_link('Settings', href: edit_user_path(user)) }\n      it { should_not have_link('Sign out', href: signout_path) }\n     # it { should have_link('Sign in', href: signin_path) }\n\n    end\n\n      describe \"as wrong user\" do\n        let(:user) { FactoryGirl.create(:user) }\n        let(:wrong_user) { FactoryGirl.create(:user, email: \"wrong@example.com\") }\n        before { sign_in user, no_capybara: true }\n\n        describe \"submitting a GET request to the Users#edit action\" do\n          before { get edit_user_path(wrong_user) }\n          specify { expect(response.body).not_to match(full_title('Edit user')) }\n          specify { expect(response).to redirect_to(root_url) }\n        end\n\n        describe \"submitting a PATCH request to the Users#edit action\" do\n          before { patch user_path(wrong_user) }\n          specify { expect(response).to redirect_to(root_url) }\n        end\n\n      end\n\n      describe \"as non-admin user\" do\n        let(:user) { FactoryGirl.create(:user) }\n        let(:non_admin) { FactoryGirl.create(:user) }\n\n        before { sign_in non_admin, no_capybara: true }\n\n        describe \"submitting a DELETE request to the Users#destroy action\" do\n          before { delete user_path(user) }\n          specify { expect(response).to redirect_to(root_url) }\n        end\n      end\n\n    describe \"for already signed in users\" do\n      let(:user)  { FactoryGirl.create(:user) }\n      before { sign_in user, no_capybara: true }\n\n\n        describe \" Using a new action \" do\n            before { get new_user_path }\n            specify { response.should redirect_to(root_path) }\n        end\n\n        describe \" Using a signup action \" do\n            before { get signup_path }\n            specify { response.should redirect_to(root_path) }\n        end\n    end\n\n  end\n\n\nend\n",
 			"file": "requests/authentication_pages_spec.rb",
+			"file_size": 4529,
+			"file_write_time": 130314032291140359,
 			"settings":
 			{
-				"buffer_size": 3199,
+				"buffer_size": 4529,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
-			"settings":
-			{
-				"buffer_size": 833,
-				"line_ending": "Unix"
-			}
-		},
-		{
+			"contents": "class UsersController < ApplicationController\n\n   before_action :signed_in_user, only: [:edit, :update, :show, :index]\n   before_action :correct_user, only: [:edit, :update]\n   before_action :admin_user, only: :destroy\n   before_action :loggedin_revisiting, only: [:new, :create]\n  \n\n\n\n\n  def destroy\n    if current_user.admin?\n      flash[:success] = \"You cannot delete Yourself\"   \n    else\n      User.find(params[:id]).destroy\n      flash[:success] = \"User deleted.\"\n      redirect_to users_url\n    end \n  end\n\n  def index\n    @users = User.paginate(page: params[:page])\n  end\n\n  def new\n     @user = User.new\n  end\n  \n  def create\n      @user=User.new(user_params)\n      if @user.save\n         sign_in @user\n         flash[:success] = \"Welcome to the Sample App!\"\n         redirect_to @user\n      else\n         render \"new\"\n      end\n  end\n   \n   def show\n      @user = User.find(params[:id])\n   end  \n\n   def edit\n  end\n\n  def update\n    if @user.update_attributes(user_params)\n      flash[:success] = \"Profile updated\"\n      redirect_to @user\n    else\n      render 'edit'\n    end\n  end\n\n  private\n  def user_params\n     params.require(:user).permit(:name, :email, :password, :password_confirmation)\n  end\n\ndef signed_in_user\n    unless signed_in?\n      store_location\n      redirect_to signin_url, notice: \"Please sign in.\"\n    end\n  end\n\n  def correct_user\n    @user = User.find(params[:id])\n    redirect_to(root_url) unless current_user?(@user)\n  end  \n\n  def admin_user\n    redirect_to(root_url) unless current_user.admin?\n    \n  end\n\n\n  def loggedin_revisiting\n      if signed_in?\n        redirect_to root_url, notice: \"Already logged in\"     \n      end\n  end\n\n\nend\n",
 			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
+			"file_size": 1676,
+			"file_write_time": 130314035345113672,
 			"settings":
 			{
-				"buffer_size": 1082,
+				"buffer_size": 1676,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
+			"contents": "<% provide(:title, \"Edit user\") %>\n\n<h1>Update your profile</h1>\n\n<div class=\"row\">\n	<div class=\"span6 offset3\">\n\n		<%= form_for(@user) do |f| %>\n		<%= render 'shared/error_messages' %>\n\n			<%= f.label :name %>\n			<%= f.text_field :name %>\n\n			<%= f.label :email %>\n			<%= f.text_field :email %>\n\n			<%= f.label :password %>\n			<%= f.password_field :password %>\n\n			<%= f.label :password_confirmation, \"Confirm Password\" %>\n			<%= f.password_field :password_confirmation %>\n\n			<%= f.submit \"Save changes\", class: \"btn btn-large btn-primary\" %>		\n		<% end %>\n\n		<%= gravatar_for @user %>\n		<a href=\"http://gravatar.com/emails\" target=\"_blank\">change </a>\n		<br>\n		\n\n\n\n	</div>\n</div>",
+			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/views/users/edit.html.erb",
+			"file_size": 682,
+			"file_write_time": 130313940239477416,
 			"settings":
 			{
-				"buffer_size": 401,
+				"buffer_size": 682,
 				"line_ending": "Unix"
 			}
 		}
@@ -223,27 +286,34 @@
 	},
 	"file_history":
 	[
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/factories.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/static_pages/home.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/authentication_pages_spec.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/lib/tasks/sample_data.rake",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/factories.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/user_pages_spec.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/_user.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/index.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/db/migrate/20131213061622_add_admin_to_users.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/Gemfile",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/users_helper.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/_header.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/assets/stylesheets/custom.css.scss",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/edit.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/support/utilities.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/user_pages_spec.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/helper/application_helper_spec.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/models/user.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/config/routes.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/_header.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/application.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/sessions/new.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/new.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/hello",
 		"/home/nikhil/trainee/rail_projects/sample_app/features/step_definitions/authentication_steps.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/features/signing_in.feature",
-		"/home/nikhil/trainee/rail_projects/sample_app/Gemfile",
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/db/migrate/20131207061808_add_remember_token_to_users.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/assets/javascripts/application.js",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/application_controller.rb",
 		"/home/nikhil/hello",
@@ -251,7 +321,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -265,6 +335,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"unless",
+			"current_user?",
+			"current",
+			"current_user?",
+			"current_user"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -282,81 +357,80 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "requests/authentication_pages_spec.rb",
+					"file": "factories.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3199,
+						"buffer_size": 271,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3191,
-								3191
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1104.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
+					"file": "requests/user_pages_spec.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 833,
+						"buffer_size": 4257,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								210,
-								210
+								1229,
+								1229
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 537.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
+					"file": "requests/authentication_pages_spec.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1082,
+						"buffer_size": 4529,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								196,
-								196
+								2804,
+								2804
 							]
 						],
 						"settings":
@@ -366,35 +440,64 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 255.0,
+						"translation.y": 1343.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
+					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 401,
+						"buffer_size": 1676,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								239,
-								239
+								286,
+								512
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 153.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/views/users/edit.html.erb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 682,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								641,
+								641
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 204.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -404,7 +507,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -440,7 +543,7 @@
 	"project": "spec_helper.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":

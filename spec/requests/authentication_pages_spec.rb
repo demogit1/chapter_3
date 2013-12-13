@@ -50,7 +50,6 @@ describe "AuthenticationPages" do
   		it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
 
-       
   	
   	end
 
@@ -106,6 +105,7 @@ describe "AuthenticationPages" do
 
               end
           end
+
         end
 
       it { should_not have_title(user.name) }
@@ -114,6 +114,7 @@ describe "AuthenticationPages" do
       it { should_not have_link('Settings', href: edit_user_path(user)) }
       it { should_not have_link('Sign out', href: signout_path) }
      # it { should have_link('Sign in', href: signin_path) }
+
 
     end
 
@@ -146,6 +147,7 @@ describe "AuthenticationPages" do
           specify { expect(response).to redirect_to(root_url) }
         end
       end
+
 
     describe "for already signed in users" do
       let(:user)  { FactoryGirl.create(:user) }

@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       flash[:success] = "User deleted."
       redirect_to users_url
     end 
+
   end
 
   def index
@@ -77,11 +78,11 @@ def signed_in_user
   end
 
 
+
   def loggedin_revisiting
       if signed_in?
         redirect_to root_url, notice: "Already logged in"     
       end
   end
-
 
 end
