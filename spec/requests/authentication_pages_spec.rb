@@ -49,6 +49,8 @@ describe "AuthenticationPages" do
       it { should have_link('Settings', href: edit_user_path(user)) }
   		it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
+
+       
   	
   	end
 
@@ -104,9 +106,15 @@ describe "AuthenticationPages" do
 
               end
           end
-
-
         end
+
+      it { should_not have_title(user.name) }
+      it { should_not have_link('Users', href: users_path) }
+      it { should_not have_link('Profile', href: user_path(user)) }
+      it { should_not have_link('Settings', href: edit_user_path(user)) }
+      it { should_not have_link('Sign out', href: signout_path) }
+     # it { should have_link('Sign in', href: signin_path) }
+
     end
 
       describe "as wrong user" do
@@ -139,5 +147,23 @@ describe "AuthenticationPages" do
         end
       end
 
+    describe "for already signed in users" do
+      let(:user)  { FactoryGirl.create(:user) }
+      before { sign_in user, no_capybara: true }
+
+
+        describe " Using a new action " do
+            before { get new_user_path }
+            specify { response.should redirect_to(root_path) }
+        end
+
+        describe " Using a signup action " do
+            before { get signup_path }
+            specify { response.should redirect_to(root_path) }
+        end
+    end
+
   end
+
+
 end
