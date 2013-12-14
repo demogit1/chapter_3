@@ -4,8 +4,68 @@
 		"selected_items":
 		[
 			[
+				"mi",
+				"micropost"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"sh",
+				"should"
+			],
+			[
+				"sig",
+				"signed_in"
+			],
+			[
+				"pa",
+				"password"
+			],
+			[
+				"re",
+				"response"
+			],
+			[
+				"us",
+				"user"
+			],
+			[
+				"u",
+				"update"
+			],
+			[
+				"no",
+				"no_capybara"
+			],
+			[
+				"lin",
+				"link_to"
+			],
+			[
+				"shu",
+				"should_not"
+			],
+			[
+				"use",
+				"user_path"
+			],
+			[
 				"have",
-				"have_title"
+				"have_link"
+			],
+			[
+				"be",
+				"be_admin"
+			],
+			[
+				"na",
+				"name"
+			],
+			[
+				"ex",
+				"expect"
 			],
 			[
 				"vii",
@@ -14,14 +74,6 @@
 			[
 				"wrng",
 				"wrong_user"
-			],
-			[
-				"re",
-				"redirect_to"
-			],
-			[
-				"user",
-				"user_path"
 			],
 			[
 				"pat",
@@ -46,10 +98,6 @@
 			[
 				"si",
 				"sign_in"
-			],
-			[
-				"sig",
-				"signin_path"
 			],
 			[
 				"su",
@@ -132,10 +180,6 @@
 				"href"
 			],
 			[
-				"us",
-				"user"
-			],
-			[
 				"fil",
 				"fill_in"
 			],
@@ -164,34 +208,26 @@
 	"buffers":
 	[
 		{
-			"file": "requests/authentication_pages_spec.rb",
+			"file": "/home/nikhil/trainee/rail_projects/sample_app/spec/models/micropost_spec.rb",
 			"settings":
 			{
-				"buffer_size": 3199,
+				"buffer_size": 467,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
+			"file": "/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
 			"settings":
 			{
-				"buffer_size": 833,
+				"buffer_size": 3164,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
+			"file": "20131205042548_create_users.rb",
 			"settings":
 			{
-				"buffer_size": 1082,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
-			"settings":
-			{
-				"buffer_size": 401,
+				"buffer_size": 169,
 				"line_ending": "Unix"
 			}
 		}
@@ -223,27 +259,36 @@
 	},
 	"file_history":
 	[
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/factories.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/models/user.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/models/micropost.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/db/migrate/20131213110713_create_microposts.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/static_pages/home.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/authentication_pages_spec.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/lib/tasks/sample_data.rake",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/factories.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/user_pages_spec.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/_user.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/index.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/db/migrate/20131213061622_add_admin_to_users.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/Gemfile",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/users_helper.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/_header.html.erb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/assets/stylesheets/custom.css.scss",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
+		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/edit.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/support/utilities.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/requests/user_pages_spec.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/spec/helper/application_helper_spec.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/models/user.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/config/routes.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/_header.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/layouts/application.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/sessions/new.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/views/users/new.html.erb",
 		"/home/nikhil/trainee/rail_projects/sample_app/hello",
 		"/home/nikhil/trainee/rail_projects/sample_app/features/step_definitions/authentication_steps.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/features/signing_in.feature",
-		"/home/nikhil/trainee/rail_projects/sample_app/Gemfile",
-		"/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/db/migrate/20131207061808_add_remember_token_to_users.rb",
-		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/assets/javascripts/application.js",
 		"/home/nikhil/trainee/rail_projects/sample_app/app/controllers/application_controller.rb",
 		"/home/nikhil/hello",
@@ -251,7 +296,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -265,6 +310,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"unless",
+			"current_user?",
+			"current",
+			"current_user?",
+			"current_user"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -282,24 +332,51 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "requests/authentication_pages_spec.rb",
+					"file": "/home/nikhil/trainee/rail_projects/sample_app/spec/models/micropost_spec.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3199,
+						"buffer_size": 467,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3191,
-								3191
+								99,
+								99
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/nikhil/trainee/rail_projects/sample_app/spec/models/user_spec.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3164,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								583,
+								583
 							]
 						],
 						"settings":
@@ -307,34 +384,6 @@
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1104.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/helpers/sessions_helper.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 833,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								210,
-								210
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -344,54 +393,24 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/users_controller.rb",
-					"semi_transient": false,
+					"file": "20131205042548_create_users.rb",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 1082,
+						"buffer_size": 169,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								196,
-								196
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 255.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/nikhil/trainee/rail_projects/sample_app/app/controllers/sessions_controller.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 401,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								239,
-								239
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -404,7 +423,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -437,10 +456,10 @@
 	{
 		"height": 112.0
 	},
-	"project": "spec_helper.sublime-project",
+	"project": "20131213110713_create_microposts.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":

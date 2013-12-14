@@ -41,7 +41,7 @@ describe "UserPages" do
             it { should have_link('delete', href: user_path(User.first)) }
             it "should be able to delete another user" do
                expect do
-                  click_link('delete',match: :first)
+                  click_link('delete', match: :first)
                end.to change(User, :count).by(-1)
             end
             it { should_not have_link('delete', href: user_path(admin)) }
@@ -97,20 +97,25 @@ describe "UserPages" do
   
    describe "profile page" do
       let(:user) { FactoryGirl.create(:user) }
-      #before { visit user_path(user) }
+      let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+      let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
       before do
          sign_in user
          visit user_path(user)
       end
       it { should have_content(user.name) }
       it { should have_title(user.name) }
+
+      describe "microposts" do
+         it { should have_content(m1.content) }
+         it { should have_content(m2.content) }
+         it { should have_content(user.microposts.count) }
+      end
+
    end 
 
-   #edit page
-#=begin   
    describe "edit" do
       let(:user) { FactoryGirl.create(:user) }
-  #    before { visit edit_user_path(user) }
       before do
          sign_in user
          visit edit_user_path(user)
@@ -143,7 +148,6 @@ describe "UserPages" do
          specify { expect(user.reload.email).to eq new_email }
       end
 
-
       describe "forbidden attributes" do
          let(:params) do
             { user: { admin: true, password: user.password, password_confiramtion: user.password } }
@@ -154,7 +158,6 @@ describe "UserPages" do
          end
          specify { expect(user.reload).not_to be_admin }
       end
-
 
    end
 end

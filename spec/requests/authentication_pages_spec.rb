@@ -50,6 +50,7 @@ describe "AuthenticationPages" do
   		it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
 
+       
   	
   	end
 
@@ -105,7 +106,6 @@ describe "AuthenticationPages" do
 
               end
           end
-
         end
 
       it { should_not have_title(user.name) }
@@ -115,6 +115,18 @@ describe "AuthenticationPages" do
       it { should_not have_link('Sign out', href: signout_path) }
      # it { should have_link('Sign in', href: signin_path) }
 
+     describe "in the microposts Controller" do
+
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+            before { delete  micropost_path(FactoryGirl.create(:micropost)) }
+            specify { expect(response).to redirect_to(signin_path) }
+        end
+     end
 
     end
 
@@ -147,7 +159,6 @@ describe "AuthenticationPages" do
           specify { expect(response).to redirect_to(root_url) }
         end
       end
-
 
     describe "for already signed in users" do
       let(:user)  { FactoryGirl.create(:user) }

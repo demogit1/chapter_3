@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-   before_action :signed_in_user, only: [:edit, :update, :show, :index]
+   before_action :signed_in_user, only: [:edit, :update, :show, :index, :destory]
    before_action :correct_user, only: [:edit, :update]
    before_action :admin_user, only: :destroy
    before_action :loggedin_revisiting, only: [:new, :create]
@@ -10,13 +10,9 @@ class UsersController < ApplicationController
 
 
   def destroy
-    if current_user.admin?
-      flash[:success] = "You cannot delete Yourself"   
-    else
       User.find(params[:id]).destroy
       flash[:success] = "User deleted."
-      redirect_to users_url
-    end 
+      redirect_to users_url 
 
   end
 
@@ -41,6 +37,7 @@ class UsersController < ApplicationController
    
    def show
       @user = User.find(params[:id])
+      @microposts = @user.microposts.paginate(page: params[:page])
    end  
 
    def edit
